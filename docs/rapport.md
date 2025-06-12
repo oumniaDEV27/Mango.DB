@@ -121,7 +121,6 @@ On va se connecter a la premiere instance : celle en 27018 (mongosh --port 27018
 
 ![alt text](image-17.png)
 
-
 maintenant verfions chaque instance :
 
 - 27018 : ![alt text](image-18.png)
@@ -130,21 +129,22 @@ maintenant verfions chaque instance :
 
 - 27020 : ![alt text](image-20.png)
 
-
-### insertion sur le primary : 
+### insertion sur le primary
 
 On va maintenant se connecter sur le primary et y rajouter un nouvel employé et voir si cela se repercute sur nos secondary
 
-Sur 27018 (primary) : 
+Sur 27018 (primary) :
 ![alt text](image-21.png)
 
-maintenant on va se rendre sur 27019 et 27020 et faire un 
+maintenant on va se rendre sur 27019 et 27020 et faire un
+
 ```
 db.employes.find()
 ```
-pour récupérer notre employé : 
 
-Sur l'instance 27019 : 
+pour récupérer notre employé :
+
+Sur l'instance 27019 :
 
 ![alt text](image-22.png)
 
@@ -153,3 +153,30 @@ et sur 27020 :
 ![alt text](image-23.png)
 
 On peut donc en conclure que la réplication a marché.
+
+## Integration
+
+Nous avons créer un script python simple utilisant la librairie pymongo et  qui va se connecter a la base standalone avec le compte admin créer précédemment(27017), puis qui va dans un premier temps :
+
+Insertion :
+Le script insère un document "comptabilité" dans une nouvelle collection "services"
+
+![alt text](image-24.png)
+
+
+Lecture :
+Il recherche et affiche ensuite les documents ayant le champ name égal à "Comptabilité" afin de confirmer que l'insertion a bien eu lieu.
+
+![alt text](image-25.png)
+
+Mise à jour :
+Le document est modifié : la valeur du champ name passe de "Comptabilité" à "IT".
+
+![alt text](image-26.png)
+
+Suppression :
+Enfin, le document mis à jour (celui avec name égal à "IT") est supprimé, permettant ainsi de nettoyer la collection.
+
+![alt text](image-27.png)
+
+
